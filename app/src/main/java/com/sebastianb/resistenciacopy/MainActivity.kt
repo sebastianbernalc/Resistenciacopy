@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Spinner
+
 import android.widget.Toast
 import com.sebastianb.resistenciacopy.databinding.ActivityMainBinding
 import kotlin.math.pow
@@ -22,9 +22,8 @@ class MainActivity : AppCompatActivity() {
         val tolerance = resources.getIntArray(R.array.toler)
 
         mainBinding.spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
+            override fun onNothingSelected(parent: AdapterView<*>?) =
                 mainBinding.spinner1.setBackgroundColor(resources.getColor(R.color.white))
-            }
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -49,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         }
         mainBinding.spinner3.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                mainBinding.spinner3.setBackgroundColor(resources.getColor(R.color.white))
+                with(mainBinding) { with(spinner3) { setBackgroundColor(resources.getColor(R.color.white)) } }
             }
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -62,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         }
         mainBinding.spinner5.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                mainBinding.spinner5.setBackgroundColor(resources.getColor(R.color.white))
+                with(mainBinding) { with(spinner5) { setBackgroundColor(resources.getColor(R.color.white)) } }
             }
             override fun onItemSelected(
                 parent: AdapterView<*>?,

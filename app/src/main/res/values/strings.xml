@@ -10,6 +10,7 @@
     <string name="Mohm">Megaohmios</string>
     <string name="Tolerancia5">Tolerancia de: 5%</string>
     <string name="Tolerancia10">Tolerancia de: 10%</string>
+    <string name="tittle_app">Calculadora De Resistencias</string>
     <string-array name="color">
         <item>Seleccione</item>
         <item>Negro</item>
