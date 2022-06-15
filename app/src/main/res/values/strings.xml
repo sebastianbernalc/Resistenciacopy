@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Resistenciacopy</string>
+    <string name="app_name">Calculadora De Resistencias</string>
     <string name="calcular">Calcular</string>
     <string name="resistenciaes">"La resistencia es: "</string>
     <string name="resultado">Resultado</string>
