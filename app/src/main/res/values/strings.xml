@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Resistenciacopy</string>
+    <string name="calcular">Calcular</string>
+    <string name="resistenciaes">"La resistencia es: "</string>
+    <string name="resultado">Resultado</string>
+    <string name="value">La Resistencia es</string>
+    <string name="error">Seleccione los colores de la Resistencia</string>
+    <string name="ohm">Ohmios</string>
+    <string name="Kohm">Kiloohmios</string>
+    <string name="Mohm">Megaohmios</string>
+    <string name="Tolerancia5">Tolerancia de: 5%</string>
+    <string name="Tolerancia10">Tolerancia de: 10%</string>
+    <string-array name="color">
+        <item>Seleccione</item>
+        <item>Negro</item>
+        <item>Café</item>
+        <item>Rojo</item>
+        <item>Naranja</item>
+        <item>Amarillo</item>
+        <item>Verde</item>
+        <item>Azul</item>
+        <item>Violeta</item>
+        <item>Gris</item>
+        <item>Blanco</item>
+    </string-array>
+    <string-array name="tolerancia">
+        <item>Seleccione</item>
+        <item>Dorado</item>
+        <item>Plateado</item>
+    </string-array>
+</resources>
