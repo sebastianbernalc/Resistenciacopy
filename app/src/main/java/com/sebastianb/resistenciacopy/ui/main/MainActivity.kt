@@ -1,4 +1,4 @@
-package com.sebastianb.resistenciacopy
+package com.sebastianb.resistenciacopy.ui.main
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
@@ -7,19 +7,51 @@ import android.view.View
 import android.widget.AdapterView
 
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import com.sebastianb.resistenciacopy.R
 import com.sebastianb.resistenciacopy.databinding.ActivityMainBinding
 import kotlin.math.pow
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mainBinding: ActivityMainBinding  //Declaramos pero no la inicializamos
+    private lateinit var mainViewModel: MainViewModel
+
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainBinding=ActivityMainBinding.inflate(layoutInflater)
-        val view= mainBinding.root
+        mainBinding = ActivityMainBinding.inflate(layoutInflater)
+        val view = mainBinding.root
         setContentView(view)
         val colors = resources.getIntArray(R.array.colrs)
         val tolerance = resources.getIntArray(R.array.toler)
+
+        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
+
+        mainViewModel.resistance.observe(this) { res ->
+            mainBinding.resultado.text = res
+        }
+
+        mainViewModel.bgColor1.observe(this) { color ->
+            mainBinding.spinner1.setBackgroundColor(color)
+        }
+
+        mainViewModel.bgColor2.observe(this) { color ->
+            mainBinding.spinner2.setBackgroundColor(color)
+        }
+
+        mainViewModel.bgColor3.observe(this) { color ->
+            mainBinding.spinner3.setBackgroundColor(color)
+        }
+
+        mainViewModel.bgColor5.observe(this) { color ->
+            mainBinding.spinner5.setBackgroundColor(color)
+        }
+
+        mainViewModel.fieldError.observe(this) { err ->
+            val toast = Toast.makeText(this, err, Toast.LENGTH_SHORT)
+            toast.show()
+        }
+
 
         mainBinding.spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) =
@@ -30,7 +62,8 @@ class MainActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                mainBinding.spinner1.setBackgroundColor(colors[mainBinding.spinner1.selectedItemId.toInt()])
+                mainViewModel.backGroundColor1(colors, position)
+                //mainBinding.spinner1.setBackgroundColor(colors[mainBinding.spinner1.selectedItemId.toInt()])
             }
         }
         mainBinding.spinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -43,7 +76,9 @@ class MainActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                mainBinding.spinner2.setBackgroundColor(colors[mainBinding.spinner2.selectedItemId.toInt()])
+
+                mainViewModel.backGroundColor2(colors, position)
+                //mainBinding.spinner2.setBackgroundColor(colors[mainBinding.spinner2.selectedItemId.toInt()])
             }
         }
         mainBinding.spinner3.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -56,7 +91,9 @@ class MainActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                mainBinding.spinner3.setBackgroundColor(colors[mainBinding.spinner3.selectedItemId.toInt()])
+
+                mainViewModel.backGroundColor3(colors, position)
+                //mainBinding.spinner3.setBackgroundColor(colors[mainBinding.spinner3.selectedItemId.toInt()])
             }
         }
         mainBinding.spinner5.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -69,39 +106,23 @@ class MainActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                mainBinding.spinner5.setBackgroundColor(tolerance[mainBinding.spinner5.selectedItemId.toInt()])
+                mainViewModel.backGroundColor5(tolerance, position)
+                //mainBinding.spinner5.setBackgroundColor(tolerance[mainBinding.spinner5.selectedItemId.toInt()])
             }
         }
-        mainBinding.buttonCalc.setOnClickListener {
-            val color1 = mainBinding.spinner1.selectedItemId.toInt()-1
-            val color2 = mainBinding.spinner2.selectedItemId.toInt()-1
-            val color3 = mainBinding.spinner3.selectedItemId.toInt()-1
-            val color4 = mainBinding.spinner5.selectedItemId.toInt()-1
-            var result: String
-            val res =
-                (((color1.toDouble() * 10.0) + (color2.toDouble())) * 10.0.pow(color3.toDouble()))
-            if (color1==-1 || color2==-1 || color3==-1){
-                Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show()
-            }else{
-                when {
-                    res < 1000 -> {
-                        result = res.toString().plus(" " + getString(R.string.ohm))
-                    }
-                    (res >= 1000) and (res <= 1000000) -> {
-                        result = (res / 1000).toString().plus(" " + getString(R.string.Kohm))
-                    }
-                    else -> {
-                        result=(res / 1000000).toString().plus(" " + getString(R.string.Mohm))
-                    }
-                }
-                if (color4 == 0){
-                    result = result + "\n" + getString(R.string.Tolerancia5)
-                }else{
-                    result = result + "\n" + getString(R.string.Tolerancia10)
-                }
-                mainBinding.resultado.text = result
-            }
 
+        with(mainBinding) {
+            buttonCalc.setOnClickListener {
+                val color1 = spinner1.selectedItemId.toInt() - 1
+                val color2 = spinner2.selectedItemId.toInt() - 1
+                val color3 = spinner3.selectedItemId.toInt() - 1
+                val color4 = spinner5.selectedItemId.toInt() - 1
+
+
+                mainViewModel.calculateResistance(color1, color2, color3, color4)
+
+
+            }
         }
     }
 }

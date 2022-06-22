@@ -1,10 +1,11 @@
-package com.sebastianb.resistenciacopy
+package com.sebastianb.resistenciacopy.ui.splash
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.sebastianb.resistenciacopy.databinding.ActivitySplashBinding
+import com.sebastianb.resistenciacopy.ui.main.MainActivity
 import java.util.*
 import kotlin.concurrent.timerTask
 
